@@ -139,6 +139,7 @@ async function insertData(players) {
 		if (player.college) {
 			await db.collection("College").save({ _key: player.college }, { overwrite: true });
 			await db.collection("PlayerToCollege").save({
+				_key: `${player._key}-${player.college}`,
 				_from: `Players/${player._key}`,
 				_to: `College/${player.college}`,
 			}, { overwrite: true });
@@ -147,14 +148,17 @@ async function insertData(players) {
 		if (player.team) {
 			await db.collection("Team").save({ _key: player.team }, { overwrite: true });
 			await db.collection("PlayerToTeam").save({
+				_key: `${player._key}-${player.team}-${player.season}`,
 				_from: `Players/${player._key}`,
 				_to: `Team/${player.team}`,
+				season: player.season
 			}, { overwrite: true });
 		}
 
 		if (player.country) {
 			await db.collection("Country").save({ _key: player.country }, { overwrite: true });
 			await db.collection("PlayerToCountry").save({
+				_key: `${player._key}-${player.country}`,
 				_from: `Players/${player._key}`,
 				_to: `Country/${player.country}`,
 			}, { overwrite: true });
@@ -163,6 +167,7 @@ async function insertData(players) {
 		if (player.draft_year) {
 			await db.collection("Draft").save({ _key: player.draft_year }, { overwrite: true });
 			await db.collection("PlayerToDraft").save({
+				_key: `${player._key}-${player.draft_year}`,
 				_from: `Players/${player._key}`,
 				_to: `Draft/${player.draft_year}`,
 			}, { overwrite: true });
@@ -171,6 +176,7 @@ async function insertData(players) {
 		if (player.season) {
 			await db.collection("Season").save({ _key: player.season }, { overwrite: true });
 			await db.collection("PlayerToSeason").save({
+				_key: `${player._key}-${player.season}`,
 				_from: `Players/${player._key}`,
 				_to: `Season/${player.season}`,
 				age: player.age,
